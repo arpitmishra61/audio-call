@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as ReactDOM from 'react-dom';
 import Peer from 'simple-peer';
 
-import io from 'socket.io-client'
 
 export default function App() {
 
