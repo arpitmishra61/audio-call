@@ -21,6 +21,12 @@ export default function App() {
   const partnerAudio = useRef()
 
   useEffect(() => {
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(audio => {
+        //myAudio.current.srcObject = audio
+        setMyMedia(audio)
+      })
+      .catch(err => console.log(err))
 
 
   }, [])
@@ -55,12 +61,6 @@ export default function App() {
           stream: myMedia
 
         })
-        navigator.mediaDevices.getUserMedia({ audio: true })
-          .then(audio => {
-            myAudio.current.srcObject = audio
-            setMyMedia(audio)
-          })
-          .catch(err => console.log(err))
 
         peer.on("signal", data => {
           console.log(data)
@@ -76,17 +76,17 @@ export default function App() {
 
       }}>Call</button>
       <button onClick={() => {
-        console.log(partnerSecret)
+        console.log(myPeer)
         myPeer.signal(partnerSecret)
       }}>Accept When partner accept call</button>
       <button style={{ marginBottom: "30px" }} onClick={() => {
         console.log("90")
-        const peer1 = new Peer()
-        navigator.mediaDevices.getUserMedia({ audio: true })
-          .then(audio => {
-            myAudio.current.srcObject = audio
-            setMyMedia(audio)
-          }).catch(err => console.log(err))
+        const peer1 = new Peer({
+          stream: myMedia,
+          initiator: false,
+          trickle: false
+        })
+
         peer1.signal(partnerSecret)
         peer1.on("signal", data => {
           setMySecret(JSON.stringify(data))
@@ -95,6 +95,7 @@ export default function App() {
         console.log("yee")
         peer1.on("stream", stream => {
           console.log("streaming")
+          console.log(stream)
           setPartnerMedia(stream)
           partnerAudio.current.srcObject = stream
         })
