@@ -1,25 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import * as ReactDOM from 'react-dom';
+
 import Peer from 'simple-peer';
 
 
 export default function App() {
 
-  const giveRandom = () => {
-    return Math.round(((Math.random() * 100 + 500)))
-  }
+  // const giveRandom = () => {
+  //   return Math.round(((Math.random() * 100 + 500)))
+  // }
   const [myMedia, setMyMedia] = useState()
-  const [partnerMedia, setPartnerMedia] = useState()
+  const [par, setPartnerMedia] = useState()
   const [myPeer, setMyPeer] = useState()
   const [mySecret, setMySecret] = useState()
   const [partnerSecret, setPartnerSecret] = useState()
 
   const partnerSecretRef = useRef()
   const mySecretRef = useRef()
-  const myAudio = useRef()
-  const partnerAudio = useRef()
 
+  const partnerAudio = useRef()
+  console.log(par)
   useEffect(() => {
 
     navigator.mediaDevices.getUserMedia({ audio: true, video: true })
